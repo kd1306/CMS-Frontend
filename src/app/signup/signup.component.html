@@ -1,0 +1,83 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+        <span>Signup</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="signupForm">
+        <div fxFlex fxLayout="column">
+            <mat-form-field fxFlex>
+                <mat-label for="name">Name</mat-label>
+                <input matInput [formControl]="nameControl" required>
+                <mat-error *ngIf="nameControl.touched && nameControl.hasError('required')">
+                    This field is mandatory.
+                </mat-error>
+                <mat-error *ngIf="nameControl.touched && nameControl.hasError('pattern')">
+                    This field is invalid.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+                <mat-label for="contactNumber">Contact Number</mat-label>
+                <input matInput [formControl]="contactNumber" required>
+                <mat-error *ngIf="contactNumber.touched && contactNumber.hasError('required')">
+                    This field is mandatory.
+                </mat-error>
+                <mat-error *ngIf="contactNumber.touched && contactNumber.hasError('pattern')">
+                    This field is invalid.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+                <mat-label for="email">Email</mat-label>
+                <input matInput [formControl]="email" required>
+                <mat-error *ngIf="email.touched && email.hasError('required')">
+                    This field is mandatory.
+                </mat-error>
+                <mat-error *ngIf="email.touched && email.hasError('pattern')">
+                    This field is invalid.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+                <mat-label for="password">Password</mat-label>
+                <input matInput [formControl]="passwordControl" type="password" required [type]="password ? 'password':'text'">
+                <button type="button" mat-icon-button matSuffix (click)="password = !password" [attr.aria-label]="'Hide Password'" [attr.aria-pressed]="password">
+                    <mat-icon>{{password ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="passwordControl.touched && passwordControl.hasError('required')">
+                    This field is mandatory.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+                <mat-label for="confirmPassword">Confirm Password</mat-label>
+                <input matInput [formControl]="confirmPasswordControl" type="password" required [type]="confirmPassword ? 'password':'text'">
+                <button type="button" mat-icon-button matSuffix (click)="confirmPassword = !confirmPassword" [attr.aria-label]="'Hide Password'" [attr.aria-pressed]="password">
+                    <mat-icon>{{confirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="confirmPasswordControl.touched && confirmPasswordControl.hasError('required')">
+                    This field is mandatory.
+                </mat-error>
+                <mat-hint *ngIf="validateSubmit() && !(confirmPasswordControl.invalid)">
+                    <span>New Password & confirmPassword does not match.</span>
+                </mat-hint>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button-color="primary" type="submit" (click)="handleSubmit()" 
+        [disabled]="validateSubmit()">
+        <mat-icon>save</mat-icon> Signup
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>close</mat-icon> Close
+    </button>
+</mat-dialog-actions>
